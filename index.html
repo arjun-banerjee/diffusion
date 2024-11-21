@@ -1,0 +1,751 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Project 5: Diffusion</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="143b4c2c-0048-80f6-8706-dc1eae65434d" class="page sans"><header><h1 class="page-title">Project 5: Diffusion</h1><p class="page-description"></p></header><div class="page-body"><h1 id="143b4c2c-0048-80cf-897a-f1878d46ea06" class="">Part A: Fun With Diffusion</h1><h3 id="143b4c2c-0048-8063-8826-f0c3006efe6d" class="">Part 0: Setup</h3><p id="143b4c2c-0048-80e5-a5b4-ffbae951eb27" class="">We’ll start by loading DeepFloyd, a text-to-image model. Here are a few of DeepFloyd’s results given various prompts and inference steps:</p><figure id="144b4c2c-0048-807c-b1f7-cf01aa5a2def" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/Screenshot_2024-11-19_at_6.19.18_PM.png"><img style="width:707.9861450195312px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/Screenshot_2024-11-19_at_6.19.18_PM.png"/></a></figure><p id="144b4c2c-0048-800f-b9ea-e7dacc0e95b9" class="">In general, increasing the number of inference steps increases the quality of the image. Moreover, the images are pretty high quality, with very accurate depictions of the input image.</p><p id="144b4c2c-0048-8070-aea8-d6393317ad6f" class="">For the purpose of reproducibility, we will be using a random seed of 180.</p><h3 id="143b4c2c-0048-801c-94aa-dcca2438559e" class="">Part 1: Sampling Loops</h3><p id="143b4c2c-0048-8059-8114-d8b292afcc2a" class="">Throughout this part, we use the noise schedule defined by DeepFloyd to generate <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span></span><span>﻿</span></span>.</p><p id="143b4c2c-0048-805e-adbd-d9e68f682496" class=""><strong>1.1: Noising</strong></p><p id="143b4c2c-0048-805e-a040-fc5782e065c7" class="">Our first goal will be to denoise an image. To start, we implement a forward noising function, which follows <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub><mo>=</mo><msqrt><mover accent="true"><msub><mi>α</mi><mi>t</mi></msub><mo>ˉ</mo></mover></msqrt><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><mo>=</mo><msqrt><mrow><mn>1</mn><mo>−</mo><mover accent="true"><msub><mi>α</mi><mi>t</mi></msub><mo>ˉ</mo></mover></mrow></msqrt><mi>N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_t = \sqrt{\bar{\alpha_t}}x_0 + = \sqrt{1-\bar{\alpha_t}}N(0,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.2461em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7939em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">ˉ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span style="top:-2.7539em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2461em;"><span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">+</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0822em;vertical-align:-0.25em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8322em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord">ˉ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span style="top:-2.7922em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2078em;"><span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>. In essence, we are creating our new image by sampling from a normal distribution with a mean that is scaled from our image and a changing variance. Here are the results of the forward process:</p><figure id="143b4c2c-0048-8002-b05d-dfb4b4449041" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image.png"><img style="width:707.9688110351562px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image.png"/></a></figure><p id="143b4c2c-0048-8088-8c52-eb0afc463298" class=""><strong>1.2: Gaussian Blur Denoising</strong></p><p id="143b4c2c-0048-8058-9a24-fff71cc9a8e4" class="">Classical denoising methods often involve applying a Gaussian Blur filter to denoise an image by finding the “averages” of a kernel region. We first try this method for denoising, with <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>kernel size</mtext><mo>=</mo><mn>5</mn><mo separator="true">,</mo><mi>σ</mi><mo>=</mo><mfrac><mn>5</mn><mn>3</mn></mfrac></mrow><annotation encoding="application/x-tex">\text{kernel size} = 5, \sigma = \frac{5}{3}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">kernel size</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">5</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span>:</p><figure id="143b4c2c-0048-8006-b224-c82a93ed747f" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%201.png"><img style="width:707.9774780273438px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%201.png"/></a></figure><p id="143b4c2c-0048-80b4-afa7-c572b044da9e" class="">As we can see, as we tend towards pure noise, classical methods are unable to reconstruct the image.</p><p id="143b4c2c-0048-804d-a8a4-e0db5755341a" class=""><strong>1.3: One Step Denoising</strong></p><p id="143b4c2c-0048-80a4-a49f-f704ab2c09a2" class="">We next try to one step denoising by predicting the noise (<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ε</mi></mrow><annotation encoding="application/x-tex">\varepsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ε</span></span></span></span></span><span>﻿</span></span>) with the DeepFloyd U-Net, then isolating the predicted image by solving for <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">x_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> using the equation in section 1.1 with a know <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ε</mi></mrow><annotation encoding="application/x-tex">\varepsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ε</span></span></span></span></span><span>﻿</span></span>: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>0</mn></msub><mo>=</mo><mfrac><mrow><msub><mi>x</mi><mi>t</mi></msub><mo>−</mo><msqrt><mrow><mn>1</mn><mo>−</mo><mover accent="true"><msub><mi>α</mi><mi>t</mi></msub><mo>ˉ</mo></mover></mrow></msqrt><mi>ε</mi></mrow><msqrt><mover accent="true"><msub><mi>α</mi><mi>t</mi></msub><mo>ˉ</mo></mover></msqrt></mfrac></mrow><annotation encoding="application/x-tex">x_0 = \frac{x_t - \sqrt{1-\bar{\alpha_t}}\varepsilon}{\sqrt{\bar{\alpha_t}}} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.576em;vertical-align:-0.538em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.038em;"><span style="top:-2.6279em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.803em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mtight" style="padding-left:0.833em;"><span class="mord accent mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:-0.0037em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">ˉ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span><span style="top:-2.763em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail mtight" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.237em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4491em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mbin mtight">−</span><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mtight" style="padding-left:0.833em;"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord accent mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:-0.0037em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.25em;"><span class="mord mtight">ˉ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span><span style="top:-2.8013em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail mtight" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1987em;"><span></span></span></span></span></span><span class="mord mathnormal mtight">ε</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.538em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span><span>﻿</span></span>. Here are the results:</p><figure id="143b4c2c-0048-8099-82a6-f774d225552e" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%202.png"><img style="width:707.9861450195312px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%202.png"/></a></figure><p id="143b4c2c-0048-80cf-9d2e-c27c04458d7a" class="">
+</p><p id="143b4c2c-0048-802a-af68-ff04b42dd0a0" class="">This does better at recreating the original image. </p><p id="143b4c2c-0048-8048-b580-f38d5e821cd7" class=""><strong>1.4: Iterative Denoising</strong></p><p id="144b4c2c-0048-80e3-8265-e208a465b272" class="">If we take the perspective of denoising that the “previous” image must be a convex combination of the current image and the predicted first image from a given timestep (found using the method in 1.3), we can iteratively denoise an image timestep by timestep. This can be found using the following equation: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><msup><mi>t</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></msub><mo>=</mo><mfrac><mrow><msqrt><msub><mover accent="true"><mi>α</mi><mo>ˉ</mo></mover><msup><mi>t</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></msub></msqrt><msub><mi>β</mi><mi>t</mi></msub></mrow><mrow><mn>1</mn><mo>−</mo><msub><mover accent="true"><mi>α</mi><mo>ˉ</mo></mover><mi>t</mi></msub></mrow></mfrac><msub><mi>x</mi><mn>0</mn></msub><mo>+</mo><mfrac><mrow><msqrt><msub><mi>α</mi><mi>t</mi></msub></msqrt><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mover accent="true"><mi>α</mi><mo>ˉ</mo></mover><msup><mi>t</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></msub><mo stretchy="false">)</mo></mrow><mrow><mn>1</mn><mo>−</mo><msub><mover accent="true"><mi>α</mi><mo>ˉ</mo></mover><mi>t</mi></msub></mrow></mfrac><msub><mi>x</mi><mi>t</mi></msub><mo>+</mo><msub><mi>v</mi><mi>σ</mi></msub></mrow><annotation encoding="application/x-tex">x_{t&#x27;} = \frac{\sqrt{\bar\alpha_{t&#x27;}}\beta_t}{1 - \bar\alpha_t} x_0 + \frac{\sqrt{\alpha_t}(1 - \bar\alpha_{t&#x27;})}{1 - \bar\alpha_t} x_t + v_\sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.328em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6828em;"><span style="top:-2.786em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.4831em;vertical-align:-0.4451em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.038em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.2222em;"><span class="mord mtight">ˉ</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:-0.0037em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.5175em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7435em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mtight" style="padding-left:0.833em;"><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.2222em;"><span class="mord mtight">ˉ</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3448em;margin-left:-0.0037em;margin-right:0.0714em;"><span class="pstrut" style="height:2.6068em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8496em;"><span style="top:-2.8496em;margin-right:0.1em;"><span class="pstrut" style="height:2.5556em;"></span><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.262em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.7035em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail mtight" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2965em;"><span></span></span></span></span></span><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:-0.0528em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4451em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.494em;vertical-align:-0.4451em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0489em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.2222em;"><span class="mord mtight">ˉ</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:-0.0037em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.5239em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord sqrt mtight"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7344em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mtight" style="padding-left:0.833em;"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2963em;"><span style="top:-2.357em;margin-left:-0.0037em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.6944em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail mtight" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3056em;"><span></span></span></span></span></span><span class="mopen mtight">(</span><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mtight"><span class="mord accent mtight"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.5678em;"><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="mord mathnormal mtight" style="margin-right:0.0037em;">α</span></span><span style="top:-2.7em;"><span class="pstrut" style="height:2.7em;"></span><span class="accent-body" style="left:-0.2222em;"><span class="mord mtight">ˉ</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3448em;margin-left:-0.0037em;margin-right:0.0714em;"><span class="pstrut" style="height:2.6068em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8496em;"><span style="top:-2.8496em;margin-right:0.1em;"><span class="pstrut" style="height:2.5556em;"></span><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.262em;"><span></span></span></span></span></span></span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4451em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">σ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="144b4c2c-0048-80be-84a2-d937866935c2" class="">Here are the results of iterative denoising:</p><div id="144b4c2c-0048-802c-a5a0-cd09ddee07bb" class="column-list"><div id="144b4c2c-0048-80c1-97d5-c60a8f64970f" style="width:33.333333333333336%" class="column"><figure id="144b4c2c-0048-80fc-a7ca-c9fd9afdd7be" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/c8d23677-e67f-4eaa-a3a8-acabcbfae316.png"><img style="width:316.4542936288089px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/c8d23677-e67f-4eaa-a3a8-acabcbfae316.png"/></a><figcaption>Iterative Denoising</figcaption></figure></div><div id="144b4c2c-0048-8022-9991-ebc526eebe19" style="width:33.333333333333336%" class="column"><figure id="144b4c2c-0048-80cc-a27c-e9946e83026d" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/538b44b6-0900-4998-a805-33124554e864.png"><img style="width:319.10614525139664px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/538b44b6-0900-4998-a805-33124554e864.png"/></a><figcaption>One step denoising</figcaption></figure></div><div id="144b4c2c-0048-806b-a7a0-fb47a89c80d7" style="width:33.33333333333333%" class="column"><figure id="144b4c2c-0048-8059-b62d-d0213c9e2d8d" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/Screenshot_2024-11-19_at_9.28.00_PM.png"><img style="width:580px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/Screenshot_2024-11-19_at_9.28.00_PM.png"/></a><figcaption>Gaussian Blur denoising</figcaption></figure></div></div><p id="144b4c2c-0048-80fc-8c14-cb95a93225e1" class="">We can also view the iterative denoising predictions at different timesteps:</p><figure id="144b4c2c-0048-8099-bd88-f3d00eb73139" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%203.png"><img style="width:707.9861450195312px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%203.png"/></a></figure><p id="143b4c2c-0048-8069-84bf-cc5fcecea2ea" class=""><strong>1.5: Diffusion Model Sampling</strong></p><p id="144b4c2c-0048-80c8-8a0b-fdc9e7d30c93" class="">In the previous part, we passed in a partially noised photo of the Campanile at timestep 690. If we instead pass in a completely noisy photo, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>I</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">N(0, I)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>, into our iterative denoising model, we see we are able to get a series of different, yet semi-meaningful, pictures:</p><figure id="144b4c2c-0048-8056-9674-efd7ddfd9d06" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%204.png"><img style="width:707.9688110351562px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%204.png"/></a></figure><figure id="144b4c2c-0048-800b-9c17-c69d03edaab0" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%205.png"><img style="width:707.9688110351562px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%205.png"/></a></figure><p id="144b4c2c-0048-801a-9817-ff9a9e42c41e" class=""><strong>1.6: Classifier-Free Guidance (CFG) For Diffusion</strong></p><p id="144b4c2c-0048-8065-aef3-f7898173ac32" class="">Unfortunately, the images above have distortions and some (like the bottom #5) seem to have no meaning. To improve the image quality, we use classifier free <strong>guidance </strong>(widely called a “cheat code” for diffusion model creation), where we run a forward pass of our U-NET with two different prompt inputs: a conditional one and an unconditional one. We then form our noise estimate for iterative denoising using a  combination of these two estimates: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ε</mi><mo>=</mo><msub><mi>ε</mi><mi>u</mi></msub><mo>+</mo><mi>γ</mi><mo stretchy="false">(</mo><msub><mi>ε</mi><mi>c</mi></msub><mo>−</mo><msub><mi>ε</mi><mi>u</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\varepsilon = \varepsilon_u + \gamma(\varepsilon_c - \varepsilon_u) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ε</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">ε</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">ε</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">ε</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">u</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>. This results in much better results. Here, we show when <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">\gamma = 7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">7</span></span></span></span></span><span>﻿</span></span>: </p><figure id="144b4c2c-0048-801c-b271-c1e958765777" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%206.png"><img style="width:707.9688110351562px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%206.png"/></a></figure><figure id="144b4c2c-0048-804a-b5b4-c1690e951517" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%207.png"><img style="width:707.9688110351562px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%207.png"/></a></figure><p id="144b4c2c-0048-8048-93b4-e09db2fb75fd" class="">In contrast to 1.5, these images are significantly more colorful and realistic.</p><p id="144b4c2c-0048-80f5-b2bf-c4a441839668" class=""><strong>1.7.0: SDE Edit</strong></p><p id="144b4c2c-0048-8083-89f6-dbc23b1a15ab" class="">We can use the SDE edit algorithm to “hallucinate” new images on a close manifold to our original image. By changing when we start our forward process (ie: what time starts, as labelled above), we are able to reconstruct images that look more and more similar to the original image (as we move toward a manifold that is closer to the original image)!</p><p id="144b4c2c-0048-8020-be06-e9dded000dcd" class="">Reference images:</p><div id="144b4c2c-0048-8021-874d-c2f969942c84" class="column-list"><div id="144b4c2c-0048-804a-8619-f975f45d20a5" style="width:33.333333333333336%" class="column"><figure id="144b4c2c-0048-800a-987e-cf5acb4cc026" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%208.png"><img style="width:288px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%208.png"/></a></figure></div><div id="144b4c2c-0048-8017-b38a-c76b8e1e1ae7" style="width:33.333333333333336%" class="column"><figure id="144b4c2c-0048-800b-a76e-ebb29e4b9650" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%209.png"><img style="width:288px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%209.png"/></a></figure></div><div id="144b4c2c-0048-800e-b3bd-ceedda50f220" style="width:33.33333333333333%" class="column"><figure id="144b4c2c-0048-8078-98d6-e0e4028b4fb2" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2010.png"><img style="width:240px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2010.png"/></a></figure></div></div><p id="144b4c2c-0048-8098-bd4f-ef95eef2e449" class="">SDE Edits:</p><figure id="144b4c2c-0048-80b9-94f4-d3ed0abce5cb" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2011.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2011.png"/></a></figure><figure id="144b4c2c-0048-8074-a07f-cce2d90be0d0" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2012.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2012.png"/></a></figure><figure id="144b4c2c-0048-803f-802b-dc0a2a6252bb" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2013.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2013.png"/></a></figure><p id="144b4c2c-0048-8094-8f1a-db136ee106b6" class="">My favorite part is the little ghost Totoro at the end of the last generation!</p><p id="144b4c2c-0048-80d5-bc57-d16d251d8e19" class="">And here’s it with the American flag. Works pretty well!</p><figure id="144b4c2c-0048-805a-ad58-d26992570dd6" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2014.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2014.png"/></a></figure><p id="144b4c2c-0048-801e-bf4e-ec4714deb2b9" class=""><strong>1.7.1: Editing Hand-Drawn and Web Images</strong></p><p id="144b4c2c-0048-80a2-a7da-f5f41933c396" class="">We can also transform drawings into more realistic photos by noising the image and trying to project the image onto a more realistic manifold. Here are three images we attempt this method on, one from Goya and 2 from me!</p><div id="144b4c2c-0048-8016-9725-f5a0e308f272" class="column-list"><div id="144b4c2c-0048-80d0-b1c7-f7723c656dce" style="width:33.333333333333336%" class="column"><figure id="144b4c2c-0048-8004-aba2-f3cd3ec02981" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2015.png"><img style="width:672px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2015.png"/></a></figure></div><div id="144b4c2c-0048-8089-850b-fb50860574dc" style="width:33.333333333333336%" class="column"><figure id="144b4c2c-0048-8079-8daa-e2e6b3bed29b" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2016.png"><img style="width:720px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2016.png"/></a></figure></div><div id="144b4c2c-0048-801d-8819-c00426449e33" style="width:33.33333333333333%" class="column"><figure id="144b4c2c-0048-80b9-870a-f6018fdb994f" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2017.png"><img style="width:192px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2017.png"/></a></figure></div></div><figure id="144b4c2c-0048-8075-aaac-f3cfa4a5d870" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2018.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2018.png"/></a></figure><figure id="144b4c2c-0048-8003-8c57-e789daa74b79" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2019.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2019.png"/></a></figure><figure id="144b4c2c-0048-8016-a884-dc8342933ef8" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2020.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2020.png"/></a></figure><p id="144b4c2c-0048-8010-a020-f7639d9d426f" class=""><strong>1.7.2: Inpainting</strong></p><p id="144b4c2c-0048-8002-97ed-d2e0ef58e9d6" class="">We can also use our model to select regions an inpaint according to prompts. Here are the input images, mask, to replace and final image</p><div id="145b4c2c-0048-803e-ac88-dcde3274ec7e" class="column-list"><div id="145b4c2c-0048-8064-889b-ebfdfb788439" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-8067-90bb-f1e4be044109" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2021.png"><img style="width:480px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2021.png"/></a></figure></div><div id="145b4c2c-0048-8034-9614-d37606c09bfe" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-8005-bada-fb354af477ab" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2022.png"><img style="width:432px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2022.png"/></a></figure></div><div id="145b4c2c-0048-8002-911d-f2583a212f86" style="width:33.33333333333333%" class="column"><figure id="145b4c2c-0048-80d6-b39e-d808c250d368" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2023.png"><img style="width:576px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2023.png"/></a></figure></div></div><figure id="145b4c2c-0048-800e-a753-e50160560ca8" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/fafe2dbd-d799-4739-a0fa-961761f0bee3.png"><img style="width:320.88888888888886px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/fafe2dbd-d799-4739-a0fa-961761f0bee3.png"/></a></figure><div id="145b4c2c-0048-80bc-af68-fadeafaa7e0c" class="column-list"><div id="145b4c2c-0048-80f6-ab34-c002c49d4b7e" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-8072-94a3-ebd0bd2774f1" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2024.png"><img style="width:528px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2024.png"/></a></figure></div><div id="145b4c2c-0048-805f-b6f9-d9507e51a488" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-80a2-b69b-ebb16cdd754c" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2025.png"><img style="width:336px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2025.png"/></a></figure></div><div id="145b4c2c-0048-808d-83ac-c12f304d6d00" style="width:33.33333333333333%" class="column"><figure id="145b4c2c-0048-800d-8569-ed265ee0ab0e" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2026.png"><img style="width:864px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2026.png"/></a></figure></div></div><p id="144b4c2c-0048-8078-b8b2-e664aa05f8b2" class="">Here are 2 results:</p><div id="145b4c2c-0048-80b7-857e-d7818a78407e" class="column-list"><div id="145b4c2c-0048-80d5-92d8-fc5717e2530e" style="width:50%" class="column"><figure id="145b4c2c-0048-805c-bac6-ed4f07665c03" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/f85efbea-1362-42c6-97fa-b6ca40cb0e3f.png"><img style="width:320.90909090909093px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/f85efbea-1362-42c6-97fa-b6ca40cb0e3f.png"/></a></figure></div><div id="145b4c2c-0048-80c3-8cd3-fbabe928b294" style="width:50%" class="column"><figure id="145b4c2c-0048-80d0-8c87-dc4f127dd818" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/7387ecc8-2533-4963-bc0b-814ff438fded.png"><img style="width:321.78272980501384px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/7387ecc8-2533-4963-bc0b-814ff438fded.png"/></a></figure></div></div><p id="145b4c2c-0048-80e9-8cf5-dd7d127ff22c" class="">And:</p><div id="145b4c2c-0048-806c-bfad-c967b97a57d9" class="column-list"><div id="145b4c2c-0048-80d7-8024-fda8d06732eb" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-80c0-b244-c0d314527bcf" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2027.png"><img style="width:768px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2027.png"/></a></figure></div><div id="145b4c2c-0048-806c-ae6e-ef53091f5264" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-80b6-9578-f5d8d447a7af" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2028.png"><img style="width:768px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2028.png"/></a></figure></div><div id="145b4c2c-0048-8021-9040-d1aa6cfa33ca" style="width:33.33333333333333%" class="column"><figure id="145b4c2c-0048-80bb-af81-fd8b51926d4a" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2029.png"><img style="width:672px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2029.png"/></a></figure></div></div><div id="145b4c2c-0048-80e5-9557-c30db77f3b1d" class="column-list"><div id="145b4c2c-0048-80ef-b940-e140f6fd6d6e" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-8002-bdf8-dcee5b177acf" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/0ce64206-d6bc-42a8-8349-02d642ef0cca.png"><img style="width:313.7950138504155px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/0ce64206-d6bc-42a8-8349-02d642ef0cca.png"/></a></figure></div><div id="145b4c2c-0048-80f2-9e4f-f7851d127b0b" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-80a3-be98-e3ac80400fc6" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/76e69d5a-68f9-4afc-b1df-a33c9db8712b.png"><img style="width:315.55555555555554px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/76e69d5a-68f9-4afc-b1df-a33c9db8712b.png"/></a></figure></div><div id="145b4c2c-0048-80a7-9acb-e719e2757244" style="width:33.33333333333333%" class="column"><figure id="145b4c2c-0048-80a0-a5b7-ee940f649808" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/85c7717f-0580-47bd-97cf-3f5ec3fa74d3.png"><img style="width:320.88397790055245px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/85c7717f-0580-47bd-97cf-3f5ec3fa74d3.png"/></a></figure></div></div><p id="144b4c2c-0048-80c8-b187-c7ebeb058505" class=""><strong>1.7.2: Text-Conditional Image-to-image Translation</strong></p><p id="144b4c2c-0048-80bd-b0a7-f22b2081183d" class="">We now change the condition to other prompts. Here’s the campanile as a rocket ship:</p><figure id="144b4c2c-0048-80a7-a987-cf138be61926" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2030.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2030.png"/></a></figure><p id="144b4c2c-0048-806d-ae39-f81e0c60fea4" class="">Ronaldo wearing a hat:</p><figure id="144b4c2c-0048-8049-9c21-ed715a0a57bf" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2031.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2031.png"/></a></figure><p id="144b4c2c-0048-805a-a18f-f1f86c96bbef" class="">Totoro as a pencil:<br/><br/></p><figure id="144b4c2c-0048-80a5-8612-ed8f2d30b94e" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2032.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2032.png"/></a></figure><p id="144b4c2c-0048-805f-b370-dda779c384c9" class=""><strong>1.7.2: Visual Angragrams</strong></p><p id="144b4c2c-0048-8030-a8bf-cd88fad0c3bb" class="">We can also make visual anagrams. Here are a few variants an anagram of a campfire and an old man.</p><div id="143b4c2c-0048-8053-90d9-eaddc1e5a655" class="column-list"><div id="143b4c2c-0048-8082-b82f-dcab0466b443" style="width:50%" class="column"><figure id="143b4c2c-0048-80e3-9e72-d86dabaf36af" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/b1cda3a3-a283-453d-bdc1-756668f0e8c0.png"><img style="width:323.5955056179775px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/b1cda3a3-a283-453d-bdc1-756668f0e8c0.png"/></a></figure></div><div id="143b4c2c-0048-800c-bf37-ef5b60521c33" style="width:50%" class="column"><figure id="143b4c2c-0048-8066-9192-e3d87b51fec9" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/2af35486-7aba-47a0-aa7c-8fa964cd64fe.png"><img style="width:314.7252747252747px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/2af35486-7aba-47a0-aa7c-8fa964cd64fe.png"/></a></figure></div></div><div id="143b4c2c-0048-80da-9216-d8a7c4a09e02" class="column-list"><div id="143b4c2c-0048-809f-9f05-f78289836bfd" style="width:50%" class="column"><figure id="143b4c2c-0048-8000-87e2-f94b5c99f4ac" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/e81da5ce-0171-4817-9363-e2ef5c813283.png"><img style="width:320px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/e81da5ce-0171-4817-9363-e2ef5c813283.png"/></a></figure></div><div id="143b4c2c-0048-805a-84fb-fdd4bdc0bd41" style="width:50%" class="column"><figure id="143b4c2c-0048-8027-9752-f2a1e70ecbf0" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/a4a9d825-dac2-49c2-aacf-069d42a63988.png"><img style="width:323.6467236467237px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/a4a9d825-dac2-49c2-aacf-069d42a63988.png"/></a></figure></div></div><p id="144b4c2c-0048-80dc-a134-eaf3f63be3c5" class=""> Here’s a man wearing a hat and a rocket ship:</p><div id="145b4c2c-0048-80d3-abfa-dc7675cf6740" class="column-list"><div id="145b4c2c-0048-800e-a3ff-da71cd395f31" style="width:50%" class="column"><figure id="145b4c2c-0048-8085-80e5-e34cb3b7b3a7" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/Screenshot_2024-11-20_at_10.51.16_PM.png"><img style="width:330.9895935058594px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/Screenshot_2024-11-20_at_10.51.16_PM.png"/></a></figure></div><div id="145b4c2c-0048-8042-902d-e81950d1013b" style="width:50%" class="column"><figure id="145b4c2c-0048-80ec-9f94-e6312b089542" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/Screenshot_2024-11-20_at_10.51.27_PM.png"><img style="width:330.9895935058594px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/Screenshot_2024-11-20_at_10.51.27_PM.png"/></a></figure></div></div><p id="144b4c2c-0048-806a-9c51-fcc1de0ed55a" class="">And a photo of a hipster barisita or a dog:</p><div id="144b4c2c-0048-80a7-905f-e879008b8405" class="column-list"><div id="144b4c2c-0048-8007-9ca3-d4e6b51378f6" style="width:50%" class="column"><figure id="144b4c2c-0048-803c-8b75-db7278bd16a8" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/2a59e76e-bca5-49be-94a2-41de44474153.png"><img style="width:317.3109243697479px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/2a59e76e-bca5-49be-94a2-41de44474153.png"/></a></figure></div><div id="144b4c2c-0048-80a7-a47b-ca3d0e53bfe7" style="width:50%" class="column"><figure id="144b4c2c-0048-80ca-9963-d3b4c6260ec9" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/46e5fa80-4367-4dc8-8279-8fc5403fe0ee.png"><img style="width:327.25212464589237px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/46e5fa80-4367-4dc8-8279-8fc5403fe0ee.png"/></a></figure></div></div><p id="144b4c2c-0048-80e1-b259-cb72c202d110" class=""><strong>1.7.2: Hybrid Images</strong></p><p id="144b4c2c-0048-80ef-bf86-e2b0d6609aab" class="">We can also combine images using high and low frequencies. Here is a lithography of a skull and a waterfall:</p><div id="143b4c2c-0048-80e5-95b3-ee0d0efd1908" class="column-list"><div id="143b4c2c-0048-8081-918f-d9663a5f13ae" style="width:50%" class="column"><figure id="143b4c2c-0048-8005-9151-e0f9ea9b72cf" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2033.png"><img style="width:415.9809265136719px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2033.png"/></a></figure></div><div id="143b4c2c-0048-80e5-bde8-dd07897253b0" style="width:50%" class="column"><figure id="143b4c2c-0048-801e-bc84-f5afe5584d92" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2034.png"><img style="width:330.9809265136719px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2034.png"/></a></figure></div></div><p id="144b4c2c-0048-8073-aaf5-eae932b0b762" class="">A rocket ship and mountains</p><div id="145b4c2c-0048-806e-9c1a-c65e97d88f31" class="column-list"><div id="145b4c2c-0048-8064-b420-f47a1d9545c6" style="width:50%" class="column"><figure id="145b4c2c-0048-805c-b93b-cfb1312b4d1e" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/0baaa7ff-c855-4873-aa3a-506f139bef5a.png"><img style="width:327.2112676056338px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/0baaa7ff-c855-4873-aa3a-506f139bef5a.png"/></a></figure></div><div id="145b4c2c-0048-80cd-a076-ef6368a54c12" style="width:50%" class="column"><figure id="145b4c2c-0048-802d-a03f-f32046a35088" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/5d15d32d-e0b5-4597-9a87-56c7a55d404c.png"><img style="width:320px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/5d15d32d-e0b5-4597-9a87-56c7a55d404c.png"/></a></figure></div></div><p id="144b4c2c-0048-803b-90fc-c85f5e254780" class="">The amlafi coast and a pupper:</p><figure id="145b4c2c-0048-808b-9e4b-fda9b2e6f1e0" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/86cac472-3771-4da5-8cb3-828f375dded9.png"><img style="width:317.32590529247915px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/86cac472-3771-4da5-8cb3-828f375dded9.png"/></a></figure><h1 id="144b4c2c-0048-803f-a400-c02b28423f1d" class="">Part B: <strong>Diffusion Models from Scratch!</strong></h1><h2 id="144b4c2c-0048-801b-9e58-dd43ed93ed6e" class="">Part 1: Training a Single-Step Denoising UNet</h2><h3 id="144b4c2c-0048-8091-94f8-ca70cbdd775f" class="">1.1: Implementing the UNet</h3><p id="144b4c2c-0048-80b9-bdc6-c6dee562675e" class="">We start by implementing a UNet, which was the structure we used for the previous part. The architecture we implement is described below:</p><div id="144b4c2c-0048-808b-8b62-c2d60f6e33c6" class="column-list"><div id="144b4c2c-0048-803c-8455-d8ea5a47e8fe" style="width:50%" class="column"><figure id="144b4c2c-0048-80ca-b6ea-e2368482f065" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2035.png"><img style="width:707.9861450195312px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2035.png"/></a></figure></div><div id="144b4c2c-0048-803b-849c-d1642474625d" style="width:50%" class="column"><figure id="144b4c2c-0048-809f-9c1e-f9372e4d38a6" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2036.png"><img style="width:1724px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2036.png"/></a></figure></div></div><p id="144b4c2c-0048-80cc-b0bc-f796eb1b098a" class="">After implementing our archetecture, our goal is to figure out the noiseless image via the noised version, according to minimizing the L2 loss <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">∥</mi><mi mathvariant="double-struck">E</mi><mo stretchy="false">[</mo><msub><mi>D</mi><mi>θ</mi></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>−</mo><mi>x</mi><mo stretchy="false">]</mo><msup><mi mathvariant="normal">∥</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\|\mathbb{E}[D_\theta(x) - x]\|^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∥</span><span class="mord mathbb">E</span><span class="mopen">[</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal">x</span><span class="mclose">]</span><span class="mord"><span class="mord">∥</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>. To do this, we first noise a set of images to different levels of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi></mrow><annotation encoding="application/x-tex">\sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span></span></span></span></span><span>﻿</span></span> such that we follow <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mi>x</mi><mo>+</mo><mi>σ</mi><mi>ε</mi></mrow><annotation encoding="application/x-tex">z = x + \sigma\varepsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mord mathnormal">ε</span></span></span></span></span><span>﻿</span></span> for <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>0</mn><mo separator="true">,</mo><mn>0.2</mn><mo separator="true">,</mo><mn>0.4</mn><mo separator="true">,</mo><mn>0.5</mn><mo separator="true">,</mo><mn>0.6</mn><mo separator="true">,</mo><mn>0.8</mn><mo separator="true">,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sigma = 0, 0.2, 0.4, 0.5, 0.6, 0.8, 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span> as we move down the rows.  </p><figure id="144b4c2c-0048-80da-96c4-e7321ff209ac" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2037.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2037.png"/></a></figure><figure id="144b4c2c-0048-80cb-9318-cf006b0f8126" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2038.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2038.png"/></a></figure><figure id="144b4c2c-0048-805a-b5c1-edca086282cf" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2039.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2039.png"/></a></figure><figure id="144b4c2c-0048-8046-ba2d-ff391c743179" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2040.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2040.png"/></a></figure><figure id="144b4c2c-0048-804b-a11e-fc6eb662dec3" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2041.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2041.png"/></a></figure><figure id="144b4c2c-0048-80aa-8156-d472a8dd5474" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2042.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2042.png"/></a></figure><figure id="144b4c2c-0048-80c5-96ff-c10276098d4f" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2043.png"><img style="width:707.9600830078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2043.png"/></a></figure><p id="144b4c2c-0048-80da-a86c-c6d06692470a" class="">The model was able to successfully train:</p><figure id="144b4c2c-0048-8042-abb5-fb747fae66d0" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2044.png"><img style="width:707.9861450195312px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2044.png"/></a></figure><p id="144b4c2c-0048-8065-96ad-ee2cf70eeb14" class="">And we can display the results from epochs 1 and 5:</p><figure id="144b4c2c-0048-8028-9700-ec9e227fe1cd" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2045.png"><img style="width:707.9427490234375px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2045.png"/></a></figure><figure id="144b4c2c-0048-8072-93e2-c2d3571a1b65" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2046.png"><img style="width:707.9427490234375px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2046.png"/></a></figure><figure id="144b4c2c-0048-800b-a506-ebd45ead02e1" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2047.png"><img style="width:707.9427490234375px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2047.png"/></a></figure><p id="144b4c2c-0048-80e3-a243-c3ea58ee2f50" class="">We can also try out of distribution images corresponding to <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>0</mn><mo separator="true">,</mo><mn>0.2</mn><mo separator="true">,</mo><mn>0.4</mn><mo separator="true">,</mo><mn>0.5</mn><mo separator="true">,</mo><mn>0.6</mn><mo separator="true">,</mo><mn>0.8</mn><mo separator="true">,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sigma = 0, 0.2, 0.4, 0.5, 0.6, 0.8, 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span> in decreasing order</p><figure id="144b4c2c-0048-80a2-a01d-e11054f3ed19" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2048.png"><img style="width:174.9913330078125px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2048.png"/></a><figcaption>Decreasing from <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>0</mn><mo separator="true">,</mo><mn>0.2</mn><mo separator="true">,</mo><mn>0.4</mn><mo separator="true">,</mo><mn>0.5</mn><mo separator="true">,</mo><mn>0.6</mn><mo separator="true">,</mo><mn>0.8</mn><mo separator="true">,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex"> \sigma = 0, 0.2, 0.4, 0.5, 0.6, 0.8, 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span></figcaption></figure><h3 id="144b4c2c-0048-80bc-866a-c918ec69169d" class="">Part 2: Training a Time Conditioning, Class Conditioning U-Net</h3><p id="145b4c2c-0048-800c-83df-e029e3490b41" class=""><strong>2.3: Time Condition</strong></p><p id="144b4c2c-0048-8006-a3ea-fdcb7e5a5f6b" class="">We add time conditioning. It is trained with the following loss:<br/><br/></p><figure id="144b4c2c-0048-8078-8573-cebe9f51b5c3" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2049.png"><img style="width:707.9861450195312px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2049.png"/></a></figure><p id="144b4c2c-0048-808c-bff9-c31b193d9c81" class="">We can sample the diffusion plots at different epochs:</p><div id="145b4c2c-0048-8071-9ddd-c9d0c7db6fc0" class="column-list"><div id="145b4c2c-0048-80bc-9ed5-e5598bca6ab1" style="width:50%" class="column"><figure id="145b4c2c-0048-8071-8eb6-f77e98684bce" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/ee62b8a2-ff9a-44ce-9a59-06d57d06fb06.png"><img style="width:465.28189910979233px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/ee62b8a2-ff9a-44ce-9a59-06d57d06fb06.png"/></a></figure></div><div id="145b4c2c-0048-803d-965a-e27bd0eb46a8" style="width:50%" class="column"><figure id="145b4c2c-0048-807a-8e86-e2ab1d3ae29d" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/1de0fc71-c0fa-4a1f-86d6-34a44b65843d.png"><img style="width:461.1764705882353px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/1de0fc71-c0fa-4a1f-86d6-34a44b65843d.png"/></a></figure></div></div><p id="145b4c2c-0048-80ee-98a8-d70548d569f5" class="">As we can see, training improved performance!</p><p id="145b4c2c-0048-8006-ba5e-dafaaf220ff1" class=""><strong>2.5: Class and Time Condition</strong></p><figure id="145b4c2c-0048-80d0-a79d-cc3613cf67c9" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2050.png"><img style="width:707.9861450195312px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/image%2050.png"/></a></figure><div id="145b4c2c-0048-8030-ad07-cb7e6e323ff2" class="column-list"><div id="145b4c2c-0048-800f-8e1f-fb50e7e800eb" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-8004-bbf3-f236e665aea1" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/4e6bdc8a-f7e9-41f9-bbab-edde27a9dcc6.png"><img style="width:233.6px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/4e6bdc8a-f7e9-41f9-bbab-edde27a9dcc6.png"/></a></figure></div><div id="145b4c2c-0048-80ba-b9d1-d6f2969a53e5" style="width:33.333333333333336%" class="column"><figure id="145b4c2c-0048-8034-a49f-ef7a5b4a265f" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/19234971-aec5-4bb1-9afe-14dca20f6ae6.png"><img style="width:235.57788944723617px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/19234971-aec5-4bb1-9afe-14dca20f6ae6.png"/></a></figure></div><div id="145b4c2c-0048-805e-a70a-fe263c29eb54" style="width:33.33333333333333%" class="column"><figure id="145b4c2c-0048-804a-848b-c037544153e8" class="image"><a href="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/11238dc1-393f-4a91-878d-6d5c84582a8f.png"><img style="width:232.5814536340852px" src="Project%205%20Diffusion%20143b4c2c004880f68706dc1eae65434d/11238dc1-393f-4a91-878d-6d5c84582a8f.png"/></a></figure></div></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
